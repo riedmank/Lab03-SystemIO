@@ -21,6 +21,14 @@ namespace GuessingGameTest
         }
 
         [Fact]
+        public void CanAppendFile()
+        {
+            string word = "potato";
+            AppendAFile(path, word);
+            Assert.Contains(word, ReadAFile(path));
+        }
+
+        [Fact]
         public void DeletedFileDoesNotExist()
         {
             DeleteAFile(path);

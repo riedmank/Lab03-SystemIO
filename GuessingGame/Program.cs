@@ -9,7 +9,12 @@ namespace GuessingGame
         public static void Main(string[] args)
         {
             CreateFile(path);
+            AppendAFile(path, "potato");
             string[] words = ReadAFile(path);
+            foreach (string word in words)
+            {
+                Console.WriteLine(word);
+            }
         }
 
         /// <summary>
@@ -81,6 +86,27 @@ namespace GuessingGame
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method adds a word to the text file
+        /// </summary>
+        /// <param name="path">Path to the file location</param>
+        /// <param name="word">User provided string to add to file</param>
+        public static void AppendAFile(string path, string word)
+        {
+            try
+            {
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    sw.WriteLine(word);
+                }
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

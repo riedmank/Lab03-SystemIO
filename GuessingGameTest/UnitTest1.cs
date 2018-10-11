@@ -10,8 +10,15 @@ namespace GuessingGameTest
         [Fact]
         public void CreatedFileExists()
         {
-            CreateFile();
+            CreateFile(path);
             Assert.True(File.Exists("../../../myFile.txt"));
+        }
+
+        [Fact]
+        public void DeletedFileDoesNotExist()
+        {
+            DeleteAFile(path);
+            Assert.False(File.Exists("../../../myFile.txt"));
         }
     }
 }

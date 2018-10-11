@@ -9,7 +9,8 @@ namespace GuessingGame
         public static void Main(string[] args)
         {
             CreateFile(path);
-            AppendAFile(path, "potato");
+            RemoveAWord(path, "potato");
+            //AppendAFile(path, "potato");
             string[] words = ReadAFile(path);
             foreach (string word in words)
             {
@@ -34,6 +35,7 @@ namespace GuessingGame
                         sw.WriteLine("mentat");
                         sw.WriteLine("navigator");
                         sw.WriteLine("arrakis");
+                        sw.WriteLine("potato");
                         sw.WriteLine("melange");
                         sw.WriteLine("crysknife");
                         sw.WriteLine("caladan");
@@ -95,14 +97,47 @@ namespace GuessingGame
         /// </summary>
         /// <param name="path">Path to the file location</param>
         /// <param name="word">User provided string to add to file</param>
-        public static void AppendAFile(string path, string word)
+        public static void AppendAFile(string path, string wordToAdd)
         {
             try
             {
                 using (StreamWriter sw = File.AppendText(path))
                 {
-                    sw.WriteLine(word);
+                    sw.WriteLine(wordToAdd);
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method removes a word from the file
+        /// </summary>
+        /// <param name="path">Path to the file location</param>
+        /// <param name="wordToRemove">User provided string to remove from file</param>
+        public static void RemoveAWord(string path, string wordToRemove)
+        {
+            try
+            {
+                string[] currentWords = ReadAFile(path);
+                string[] newWords = new string[currentWords.Length - 1];
+                int counter = 0;
+                for (int i = 0; i < currentWords.Length; i++)
+                {
+                    if (wordToRemove == currentWords[i])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        newWords[counter] = currentWords[i];
+                        counter++;
+                    }
+                }
+                File.WriteAllLines(path, newWords);
             }
             catch (Exception)
             {

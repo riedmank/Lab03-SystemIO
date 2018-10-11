@@ -8,4 +8,3 @@ crysknife
 caladan
 kralizec
 atreides
-potato

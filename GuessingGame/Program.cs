@@ -9,6 +9,7 @@ namespace GuessingGame
         public static void Main(string[] args)
         {
             CreateFile(path);
+            string[] words = ReadAFile(path);
         }
 
         /// <summary>
@@ -23,7 +24,16 @@ namespace GuessingGame
                 {
                     try
                     {
-                    sw.WriteLine("sandworm");
+                        sw.WriteLine("sandworm");
+                        sw.WriteLine("fremen");
+                        sw.WriteLine("mentat");
+                        sw.WriteLine("navigator");
+                        sw.WriteLine("arrakis");
+                        sw.WriteLine("melange");
+                        sw.WriteLine("crysknife");
+                        sw.WriteLine("caladan");
+                        sw.WriteLine("kralizec");
+                        sw.WriteLine("atreides");
                     }
                     catch (Exception)
                     {
@@ -37,7 +47,6 @@ namespace GuessingGame
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
@@ -53,6 +62,27 @@ namespace GuessingGame
         public static void DeleteAFile(string path)
         {
             File.Delete(path);
+        }
+
+        /// <summary>
+        /// This method reads a file
+        /// </summary>
+        /// <param name="path">Path to file location</param>
+        /// <returns>Array of strings from the file</returns>
+        public static string[] ReadAFile(string path)
+        {
+            try
+            {
+                using (StreamReader sr = File.OpenText(path))
+                {                  
+                    string[] words = File.ReadAllLines(path);
+                    return words;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

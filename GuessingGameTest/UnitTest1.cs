@@ -15,6 +15,12 @@ namespace GuessingGameTest
         }
 
         [Fact]
+        public void CanReadFile()
+        {
+            Assert.NotEmpty(ReadAFile(path));
+        }
+
+        [Fact]
         public void DeletedFileDoesNotExist()
         {
             DeleteAFile(path);

@@ -42,5 +42,17 @@ namespace GuessingGameTest
             DeleteAFile(path);
             Assert.False(File.Exists("../../../myFile.txt"));
         }
+
+        [Fact]
+        public void LetterDoesExistInChosenWord()
+        {
+
+        }
+
+        [Fact]
+        public void LetterDoesNotExistInChosenWord()
+        {
+
+        }
     }
 }

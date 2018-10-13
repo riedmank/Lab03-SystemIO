@@ -189,14 +189,15 @@ namespace GuessingGame
         public static void GuessingGame(int choice)
         {
             string[] wordsFromFile = ReadAFile(path);
-            string wordToGuess = wordsFromFile[choice];
+            string[] lettersToGuess = wordsFromFile[choice].Split("");
             string[] guesses = new string[26];
             string userGuess = "";
             int counter = 0;
+            string[] emptyGuess = new string[lettersToGuess.Length];
+            emptyGuess = Fill(emptyGuess);
             bool roundFinished = false;
             while (!roundFinished)
             {
-                Console.WriteLine(wordToGuess);
                 Console.WriteLine("Guess a letter.");
                 try
                 {
@@ -207,7 +208,9 @@ namespace GuessingGame
                     Console.WriteLine(e.Message);
                     continue;
                 }
-                roundFinished = CheckUserGuess(wordToGuess, userGuess);
+                emptyGuess = CheckUserGuess(lettersToGuess, userGuess, emptyGuess);
+                PrintArray(emptyGuess);
+                roundFinished = CheckForWin(emptyGuess);
                 if (!roundFinished)
                 {
                     GuessesSoFar(userGuess, counter, guesses);
@@ -216,23 +219,46 @@ namespace GuessingGame
             Menu();
         }
 
-        public static void CheckUserGuess(string wordToGuess, string userGuess)
+        public static string[] CheckUserGuess(string[] lettersToGuess, string userGuess, string[] emptyGuess)
         {
-            string[] lettersToGuess = wordToGuess.Split("");
-            string[] emptyGuess = new string[lettersToGuess.Length];
-            for (int i = 0; i < 26; i++)
+            for (int i = 0; i < lettersToGuess.Length; i++)
             {
-                if (wordToGuess.Contains(userGuess))
+                if (lettersToGuess[i] == userGuess)
                 {
-                    Console.WriteLine(userGuess);
+                    emptyGuess[i] = lettersToGuess[i];
+                    Console.WriteLine("Correct");
                 }
                 else
                 {
                     Console.WriteLine("Wrong");
                 }
             }
+            return emptyGuess;
         }
 
+        /// <summary>
+        /// This methods checks to see if the user won the game
+        /// </summary>
+        /// <param name="emptyGuess">Takes in the emptyGuess array from GuessingGame</param>
+        /// <returns>Returns true if array does not contain " _ " otherwise returns false</returns>
+        public static bool CheckForWin(string[] emptyGuess)
+        {
+            bool win = true;
+            foreach (string el in emptyGuess)
+            {
+                if (el == " _ ")
+                {
+                    win = false;
+                }
+            }
+            return win;
+        }
+
+        /// <summary>
+        /// Fills string array with empty spaces
+        /// </summary>
+        /// <param name="arrayToBeFilled">Array passed from GuessingGame method</param>
+        /// <returns>Returns a string array fille with " _ "</returns>
         public static string[] Fill(string[] arrayToBeFilled)
         {
             for (int i = 0; i < arrayToBeFilled.Length; i++)
@@ -242,6 +268,12 @@ namespace GuessingGame
             return arrayToBeFilled;
         }
 
+        /// <summary>
+        /// This method keeps track of user guesses and prints them to the console.
+        /// </summary>
+        /// <param name="userGuess">User provided guess</param>
+        /// <param name="counter">Tells program where to store userGuess</param>
+        /// <param name="guesses">Array of guesses</param>
         public static void GuessesSoFar(string userGuess, int counter, string[] guesses)
         {
             guesses[counter] = userGuess;
@@ -256,6 +288,18 @@ namespace GuessingGame
                 {
                     Console.Write($"{guesses[i]} ");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Prints array of values to the console.
+        /// </summary>
+        /// <param name="arrayToPrint">Takes in an array to be printed to the console.</param>
+        public static void PrintArray(string[] arrayToPrint)
+        {
+            for (int i = 0; i < arrayToPrint.Length; i++)
+            {
+                Console.Write(arrayToPrint[i]);
             }
         }
     }

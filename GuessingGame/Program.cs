@@ -161,8 +161,17 @@ namespace GuessingGame
             Console.WriteLine("2. Admin");
             Console.WriteLine("3. Exit");
 
-            int userInput = int.Parse(Console.ReadLine());
+            int userInput = 0;
 
+            try
+            {
+                userInput = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Menu();
+            }
             switch (userInput)
             {
                 case 1:
@@ -209,8 +218,8 @@ namespace GuessingGame
 
         public static void CheckUserGuess(string wordToGuess, string userGuess)
         {
-            char[] letters = wordToGuess.ToCharArray();
             string[] lettersToGuess = wordToGuess.Split("");
+            string[] emptyGuess = new string[lettersToGuess.Length];
             for (int i = 0; i < 26; i++)
             {
                 if (wordToGuess.Contains(userGuess))
@@ -222,6 +231,15 @@ namespace GuessingGame
                     Console.WriteLine("Wrong");
                 }
             }
+        }
+
+        public static string[] Fill(string[] arrayToBeFilled)
+        {
+            for (int i = 0; i < arrayToBeFilled.Length; i++)
+            {
+                arrayToBeFilled[i] = " _ ";
+            }
+            return arrayToBeFilled;
         }
 
         public static void GuessesSoFar(string userGuess, int counter, string[] guesses)

@@ -8,14 +8,7 @@ namespace GuessingGame
         public static string path = "../../../myFile.txt";
         public static void Main(string[] args)
         {
-            CreateFile(path);
-            RemoveAWord(path, "potato");
-            //AppendAFile(path, "potato");
-            string[] words = ReadAFile(path);
-            foreach (string word in words)
-            {
-                Console.WriteLine(word);
-            }
+            Menu();
         }
 
         /// <summary>
@@ -143,6 +136,108 @@ namespace GuessingGame
             {
 
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// This methods selects a random number
+        /// </summary>
+        /// <returns>Returns a random number</returns>
+        public static int RandomNumberGenerator()
+        {
+            Random rand = new Random();
+            int randomNum = rand.Next(1, ReadAFile(path).Length);
+            return randomNum;
+        }
+
+        /// <summary>
+        /// User interface for game menu
+        /// </summary>
+        public static void Menu()
+        {
+            Console.WriteLine("Welcome to the Guessing Game.");
+            Console.WriteLine("Select an option from below.");
+            Console.WriteLine("1. Play Guessing Game");
+            Console.WriteLine("2. Admin");
+            Console.WriteLine("3. Exit");
+
+            int userInput = int.Parse(Console.ReadLine());
+
+            switch (userInput)
+            {
+                case 1:
+                   GuessingGame(RandomNumberGenerator());
+                    break;
+                case 2:
+                    //Admin();
+                    break;
+                default:
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
+        public static void GuessingGame(int choice)
+        {
+            string[] wordsFromFile = ReadAFile(path);
+            string wordToGuess = wordsFromFile[choice];
+            string[] guesses = new string[26];
+            string userGuess = "";
+            int counter = 0;
+            bool roundFinished = false;
+            while (!roundFinished)
+            {
+                Console.WriteLine(wordToGuess);
+                Console.WriteLine("Guess a letter.");
+                try
+                {
+                    userGuess = Console.ReadLine();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+                roundFinished = CheckUserGuess(wordToGuess, userGuess);
+                if (!roundFinished)
+                {
+                    GuessesSoFar(userGuess, counter, guesses);
+                }
+            }
+            Menu();
+        }
+
+        public static void CheckUserGuess(string wordToGuess, string userGuess)
+        {
+            char[] letters = wordToGuess.ToCharArray();
+            string[] lettersToGuess = wordToGuess.Split("");
+            for (int i = 0; i < 26; i++)
+            {
+                if (wordToGuess.Contains(userGuess))
+                {
+                    Console.WriteLine(userGuess);
+                }
+                else
+                {
+                    Console.WriteLine("Wrong");
+                }
+            }
+        }
+
+        public static void GuessesSoFar(string userGuess, int counter, string[] guesses)
+        {
+            guesses[counter] = userGuess;
+            Console.Write("Guesses so far: ");
+            for (int i = 0; i < guesses.Length; i++)
+            {
+                if (guesses[i] == null)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.Write($"{guesses[i]} ");
+                }
             }
         }
     }

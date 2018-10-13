@@ -208,10 +208,12 @@ namespace GuessingGame
             switch (userChoice)
             {
                 case 1:
-                    AppendAWord(path, Console.ReadLine());
+                    Console.WriteLine("Type in the word you would like to add.");
+                    AppendAWord(path, Console.ReadLine().ToLower());
                     break;
                 case 2:
-                    RemoveAWord(path, Console.ReadLine());
+                    Console.WriteLine("Type in the word you would like to remove.");
+                    RemoveAWord(path, Console.ReadLine().ToLower());
                     break;
                 default:
                     Menu();
@@ -313,7 +315,6 @@ namespace GuessingGame
             }
             return arrayToBeFilled;
         }
-
         
         /// <summary>
         /// Prints array of values to the console.

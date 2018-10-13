@@ -193,10 +193,13 @@ namespace GuessingGame
         /// </summary>
         public static void Admin()
         {
+            Console.Clear();
             int userChoice = 0;
             Console.WriteLine("Admin menu. Please choose one of the following.");
             Console.WriteLine("1. Add a word.");
             Console.WriteLine("2. Delete a word.");
+            Console.WriteLine("3. Back to Main Menu.");
+            Console.WriteLine("4. Exit.");
             try
             {
                 userChoice = int.Parse(Console.ReadLine());
@@ -215,11 +218,14 @@ namespace GuessingGame
                     Console.WriteLine("Type in the word you would like to remove.");
                     RemoveAWord(path, Console.ReadLine().ToLower());
                     break;
-                default:
+                case 3:
+                    Console.Clear();
                     Menu();
                     break;
+                default:
+                    Environment.Exit(0);
+                    break;
             }
-            Menu();
         }
 
         /// <summary>

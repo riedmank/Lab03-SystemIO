@@ -188,6 +188,9 @@ namespace GuessingGame
             }
         }
 
+        /// <summary>
+        /// This method lets the user choose from admin actions and calls those methods
+        /// </summary>
         public static void Admin()
         {
             int userChoice = 0;
@@ -261,11 +264,11 @@ namespace GuessingGame
         }
 
         /// <summary>
-        /// 
+        /// This method checks to see if the user guessed a correct letter and changes a space to the letter
         /// </summary>
-        /// <param name="lettersToGuess"></param>
-        /// <param name="userGuess"></param>
-        /// <param name="emptyGuess"></param>
+        /// <param name="lettersToGuess">An array of letters that is the word to guess</param>
+        /// <param name="userGuess">A user provided guess</param>
+        /// <param name="emptyGuess">An array of underscores</param>
         /// <returns></returns>
         public static string[] CheckUserGuess(string[] lettersToGuess, string userGuess, string[] emptyGuess)
         {

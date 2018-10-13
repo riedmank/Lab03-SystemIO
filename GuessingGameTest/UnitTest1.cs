@@ -21,10 +21,10 @@ namespace GuessingGameTest
         }
 
         [Fact]
-        public void CanAppendFile()
+        public void CanAppendWordToFile()
         {
             string word = "harkonnen";
-            AppendAFile(path, word);
+            AppendAWord(path, word);
             Assert.Contains(word, ReadAFile(path));
         }
 

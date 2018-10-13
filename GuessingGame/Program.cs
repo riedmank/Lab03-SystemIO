@@ -191,18 +191,20 @@ namespace GuessingGame
             string[] wordsFromFile = ReadAFile(path);
             char[] charLetterArray = wordsFromFile[choice].ToCharArray();
             string[] lettersToGuess = CharToStringConverter(charLetterArray);
-            string[] guesses = new string[26];
+            string guesses = "";
             string userGuess = "";
-            int counter = 0;
+            //int counter = 0;
             string[] emptyGuess = new string[lettersToGuess.Length];
             emptyGuess = Fill(emptyGuess);
             bool roundFinished = false;
             while (!roundFinished)
             {
                 Console.WriteLine("Guess a letter.");
+                PrintArray(emptyGuess);
                 try
                 {
                     userGuess = Console.ReadLine();
+                    Console.Clear();
                 }
                 catch (Exception e)
                 {
@@ -210,13 +212,14 @@ namespace GuessingGame
                     continue;
                 }
                 emptyGuess = CheckUserGuess(lettersToGuess, userGuess, emptyGuess);
-                PrintArray(emptyGuess);
                 roundFinished = CheckForWin(emptyGuess);
                 if (!roundFinished)
                 {
-                    GuessesSoFar(userGuess, counter, guesses);
+                    guesses += userGuess;
+                    Console.WriteLine($"Guesses so far: {guesses}");
                 }
             }
+
             Menu();
         }
 
@@ -271,29 +274,29 @@ namespace GuessingGame
             return arrayToBeFilled;
         }
 
-        /// <summary>
-        /// This method keeps track of user guesses and prints them to the console.
-        /// </summary>
-        /// <param name="userGuess">User provided guess</param>
-        /// <param name="counter">Tells program where to store userGuess</param>
-        /// <param name="guesses">Array of guesses</param>
-        public static void GuessesSoFar(string userGuess, int counter, string[] guesses)
-        {
-            guesses[counter] = userGuess;
-            Console.Write("Guesses so far: ");
-            for (int i = 0; i < guesses.Length; i++)
-            {
-                if (guesses[i] == null)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.Write($"{guesses[i]} ");
-                }
-            }
-            Console.WriteLine("");
-        }
+        ///// <summary>
+        ///// This method keeps track of user guesses and prints them to the console.
+        ///// </summary>
+        ///// <param name="userGuess">User provided guess</param>
+        ///// <param name="counter">Tells program where to store userGuess</param>
+        ///// <param name="guesses">Array of guesses</param>
+        //public static void GuessesSoFar(string userGuess, int counter, string[] guesses)
+        //{
+        //    guesses[counter] = userGuess;
+        //    Console.Write("Guesses so far: ");
+        //    for (int i = 0; i < guesses.Length; i++)
+        //    {
+        //        if (guesses[i] == null)
+        //        {
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            Console.Write($"{guesses[i]} ");
+        //        }
+        //    }
+        //    Console.WriteLine("");
+        //}
 
         /// <summary>
         /// Prints array of values to the console.

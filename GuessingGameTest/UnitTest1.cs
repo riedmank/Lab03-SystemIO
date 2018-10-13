@@ -46,13 +46,25 @@ namespace GuessingGameTest
         [Fact]
         public void LetterDoesExistInChosenWord()
         {
-
+            char[] charLetterArray = "kaitain".ToCharArray();
+            string[] lettersToGuess = CharToStringConverter(charLetterArray);
+            string userGuess = "a";
+            string[] emptyGuess = new string[lettersToGuess.Length];
+            emptyGuess = Fill(emptyGuess);
+            CheckUserGuess(lettersToGuess, userGuess, emptyGuess);
+            Assert.Contains(userGuess, emptyGuess);
         }
 
         [Fact]
         public void LetterDoesNotExistInChosenWord()
         {
-
+            char[] charLetterArray = "kaitain".ToCharArray();
+            string[] lettersToGuess = CharToStringConverter(charLetterArray);
+            string userGuess = "d";
+            string[] emptyGuess = new string[lettersToGuess.Length];
+            emptyGuess = Fill(emptyGuess);
+            CheckUserGuess(lettersToGuess, userGuess, emptyGuess);
+            Assert.DoesNotContain(userGuess, emptyGuess);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace GuessingGame
             }
             finally
             {
-                
+
             }
         }
 
@@ -74,7 +74,7 @@ namespace GuessingGame
             try
             {
                 using (StreamReader sr = File.OpenText(path))
-                {                  
+                {
                     string[] words = File.ReadAllLines(path);
                     return words;
                 }
@@ -175,7 +175,7 @@ namespace GuessingGame
             switch (userInput)
             {
                 case 1:
-                   GuessingGame(RandomNumberGenerator());
+                    GuessingGame(RandomNumberGenerator());
                     break;
                 case 2:
                     //Admin();
@@ -189,7 +189,8 @@ namespace GuessingGame
         public static void GuessingGame(int choice)
         {
             string[] wordsFromFile = ReadAFile(path);
-            string[] lettersToGuess = wordsFromFile[choice].Split("");
+            char[] charLetterArray = wordsFromFile[choice].ToCharArray();
+            string[] lettersToGuess = CharToStringConverter(charLetterArray);
             string[] guesses = new string[26];
             string userGuess = "";
             int counter = 0;
@@ -219,6 +220,13 @@ namespace GuessingGame
             Menu();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lettersToGuess"></param>
+        /// <param name="userGuess"></param>
+        /// <param name="emptyGuess"></param>
+        /// <returns></returns>
         public static string[] CheckUserGuess(string[] lettersToGuess, string userGuess, string[] emptyGuess)
         {
             for (int i = 0; i < lettersToGuess.Length; i++)
@@ -226,11 +234,6 @@ namespace GuessingGame
                 if (lettersToGuess[i] == userGuess)
                 {
                     emptyGuess[i] = lettersToGuess[i];
-                    Console.WriteLine("Correct");
-                }
-                else
-                {
-                    Console.WriteLine("Wrong");
                 }
             }
             return emptyGuess;
@@ -289,6 +292,7 @@ namespace GuessingGame
                     Console.Write($"{guesses[i]} ");
                 }
             }
+            Console.WriteLine("");
         }
 
         /// <summary>
@@ -301,6 +305,22 @@ namespace GuessingGame
             {
                 Console.Write(arrayToPrint[i]);
             }
+            Console.WriteLine("");
+        }
+
+        /// <summary>
+        /// Converts char array into string array
+        /// </summary>
+        /// <param name="charLetterArray">Takes in a char array</param>
+        /// <returns>Returns a string array</returns>
+        public static string[] CharToStringConverter(char[] charLetterArray)
+        {
+            string[] convertedCharArray = new string[charLetterArray.Length];
+            for (int i = 0; i < charLetterArray.Length; i++)
+            {
+                convertedCharArray[i] = charLetterArray[i].ToString();
+            }
+            return convertedCharArray;
         }
     }
 }

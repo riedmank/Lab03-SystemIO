@@ -90,20 +90,21 @@ namespace GuessingGame
         /// </summary>
         /// <param name="path">Path to the file location</param>
         /// <param name="word">User provided string to add to file</param>
-        public static void AppendAFile(string path, string wordToAdd)
+        public static void AppendAWord(string path, string wordToAdd)
         {
             try
             {
                 using (StreamWriter sw = File.AppendText(path))
                 {
-                    sw.WriteLine(wordToAdd);
+                    sw.WriteLine(wordToAdd);                    
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Console.WriteLine("Error");
+                throw e;
             }
+            Console.WriteLine("Action Successful!");
         }
 
         /// <summary>
@@ -132,11 +133,12 @@ namespace GuessingGame
                 }
                 File.WriteAllLines(path, newWords);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Console.WriteLine("Error");
+                throw e;
             }
+            Console.WriteLine("Action successful");
         }
 
         /// <summary>
@@ -178,7 +180,7 @@ namespace GuessingGame
                     GuessingGame(RandomNumberGenerator());
                     break;
                 case 2:
-                    //Admin();
+                    Admin();
                     break;
                 default:
                     Environment.Exit(0);
@@ -186,14 +188,46 @@ namespace GuessingGame
             }
         }
 
-        public static void GuessingGame(int choice)
+        public static void Admin()
+        {
+            int userChoice = 0;
+            Console.WriteLine("Admin menu. Please choose one of the following.");
+            Console.WriteLine("1. Add a word.");
+            Console.WriteLine("2. Delete a word.");
+            try
+            {
+                userChoice = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            switch (userChoice)
+            {
+                case 1:
+                    AppendAWord(path, Console.ReadLine());
+                    break;
+                case 2:
+                    RemoveAWord(path, Console.ReadLine());
+                    break;
+                default:
+                    Menu();
+                    break;
+            }
+            Menu();
+        }
+
+        /// <summary>
+        /// This method is the meat of the game and calls all the methods required to play the game
+        /// </summary>
+        /// <param name="choice">Takes in a random number generated in menu</param>
+        public static void GuessingGame(int randomNumber)
         {
             string[] wordsFromFile = ReadAFile(path);
-            char[] charLetterArray = wordsFromFile[choice].ToCharArray();
+            char[] charLetterArray = wordsFromFile[randomNumber].ToCharArray();
             string[] lettersToGuess = CharToStringConverter(charLetterArray);
             string guesses = "";
             string userGuess = "";
-            //int counter = 0;
             string[] emptyGuess = new string[lettersToGuess.Length];
             emptyGuess = Fill(emptyGuess);
             bool roundFinished = false;
@@ -219,8 +253,11 @@ namespace GuessingGame
                     Console.WriteLine($"Guesses so far: {guesses}");
                 }
             }
-
-            Menu();
+            if (roundFinished)
+            {
+                Console.WriteLine("You Won!!");
+                Menu();
+            }
         }
 
         /// <summary>
@@ -274,30 +311,7 @@ namespace GuessingGame
             return arrayToBeFilled;
         }
 
-        ///// <summary>
-        ///// This method keeps track of user guesses and prints them to the console.
-        ///// </summary>
-        ///// <param name="userGuess">User provided guess</param>
-        ///// <param name="counter">Tells program where to store userGuess</param>
-        ///// <param name="guesses">Array of guesses</param>
-        //public static void GuessesSoFar(string userGuess, int counter, string[] guesses)
-        //{
-        //    guesses[counter] = userGuess;
-        //    Console.Write("Guesses so far: ");
-        //    for (int i = 0; i < guesses.Length; i++)
-        //    {
-        //        if (guesses[i] == null)
-        //        {
-        //            break;
-        //        }
-        //        else
-        //        {
-        //            Console.Write($"{guesses[i]} ");
-        //        }
-        //    }
-        //    Console.WriteLine("");
-        //}
-
+        
         /// <summary>
         /// Prints array of values to the console.
         /// </summary>

@@ -177,6 +177,7 @@ namespace GuessingGame
             switch (userInput)
             {
                 case 1:
+                    CreateFile(path);
                     GuessingGame(RandomNumberGenerator());
                     break;
                 case 2:

@@ -199,7 +199,8 @@ namespace GuessingGame
             Console.WriteLine("1. Add a word.");
             Console.WriteLine("2. Delete a word.");
             Console.WriteLine("3. Back to Main Menu.");
-            Console.WriteLine("4. Exit.");
+            Console.WriteLine("4. Delete the file. Warning: this will break the game.");
+            Console.WriteLine("5. Exit.");
             try
             {
                 userChoice = int.Parse(Console.ReadLine());
@@ -221,6 +222,9 @@ namespace GuessingGame
                 case 3:
                     Console.Clear();
                     Menu();
+                    break;
+                case 4:
+                    DeleteAFile(path);
                     break;
                 default:
                     Environment.Exit(0);

@@ -3,6 +3,7 @@ fremen
 mentat
 navigator
 arrakis
+potato
 melange
 crysknife
 caladan
